@@ -1,0 +1,62 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.messageTop {
+    display: flex;
+    align-items: center;
+}
+
+.messageImg {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/* Received Message (Left) */
+/* Received Message (Left) */
+.messageText {
+    padding: 10px 16px;
+    border-radius: 22px;
+    /* More rounded like Instagram */
+    background-color: #262626;
+    /* Instagram Dark Gray */
+    color: white;
+    max-width: 320px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.messageBottom {
+    font-size: 11px;
+    margin-top: 4px;
+    color: #a8a8a8;
+    margin-left: 4px;
+    /* Align with text */
+}
+
+.message.own {
+    align-items: flex-end;
+}
+
+/* Own Message (Right) */
+.message.own .messageText {
+    background-color: #3797f0;
+    /* Instagram Blue */
+    color: white;
+    border-bottom-right-radius: 4px;
+    /* Subtle unique shape for own msg (optional, but nice touch) */
+}
+
+.message.own .messageImg {
+    display: none;
+}
+
+.message.own .messageImg {
+    display: none;
+    /* Hide own avatar if prefered, or move to right */
+}

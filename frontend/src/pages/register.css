@@ -1,0 +1,115 @@
+.register {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.registerWrapper {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.registerLeft {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.registerRight {
+    flex: 1;
+    max-width: 500px;
+}
+
+.registerLogo {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #1877f2;
+    margin-bottom: 1rem;
+}
+
+.registerDesc {
+    font-size: 1.75rem;
+    line-height: 1.4;
+    color: #1c1e21;
+}
+
+.registerBox {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.registerBox h5 {
+    margin-bottom: 1.5rem;
+    color: #1c1e21;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Form styles */
+.MuiTextField-root {
+    margin-bottom: 1rem !important;
+}
+
+.MuiOutlinedInput-root {
+    border-radius: 6px !important;
+    background-color: #fff;
+}
+
+.MuiInputLabel-root {
+    color: #65676b !important;
+}
+
+.MuiOutlinedInput-input {
+    color: #1c1e21 !important;
+    padding: 14px 16px !important;
+    font-size: 1rem !important;
+}
+
+.MuiFormHelperText-root {
+    margin-left: 0 !important;
+    font-size: 0.75rem !important;
+}
+
+/* Button styles */
+.MuiButton-contained {
+    background-color: #42b72a !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    padding: 10px 20px !important;
+    font-size: 1.1rem !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.MuiButton-contained:hover {
+    background-color: #36a420 !important;
+}
+
+.MuiButton-contained:disabled {
+    background-color: #a4e798 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.loginRegisterButton {
+    width: 60%;
+    align-self: center;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}

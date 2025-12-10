@@ -1,0 +1,141 @@
+/* Nykaa Dark Theme - WhatsApp Web Inspired */
+:root {
+    --nykaa-bg: #000000;
+    --nykaa-panel: #111111;
+    /* Slightly lighter for sidebar/message bubbles */
+    --nykaa-accent: #fe2c55;
+    /* Neon Pink */
+    --nykaa-text: #e0e0e0;
+    --nykaa-subtext: #b0b3b8;
+    --nykaa-border: #2f2f2f;
+    --glass-blur: blur(10px);
+}
+
+body,
+.chat {
+    background-color: var(--nykaa-bg) !important;
+    font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Sidebar */
+.chatMenu {
+    background-color: var(--nykaa-bg);
+    border-right: 1px solid var(--nykaa-border);
+}
+
+.chatMenuWrapper {
+    background-color: var(--nykaa-bg);
+}
+
+.chatMenuInput {
+    background-color: var(--nykaa-panel) !important;
+    border-radius: 8px !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Selected Conversation - Neon Glow */
+.conversation.active {
+    background-color: rgba(254, 44, 85, 0.1) !important;
+    /* Pink tint */
+    border-left: 3px solid var(--nykaa-accent);
+}
+
+.conversation:hover {
+    background-color: var(--nykaa-panel) !important;
+}
+
+.conversationName {
+    font-weight: 500;
+    color: var(--nykaa-text);
+}
+
+/* Chat Box */
+.chatBox {
+    background-color: var(--nykaa-bg);
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    /* Subtle dark pattern if desired, or just black */
+    background-blend-mode: overlay;
+}
+
+/* Header */
+.chatBoxHeader {
+    background-color: var(--nykaa-panel);
+    border-bottom: 1px solid var(--nykaa-border);
+    padding: 10px 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* Message Bubbles */
+.message {
+    padding: 8px 0;
+}
+
+.messageText {
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    position: relative;
+    max-width: 60% !important;
+}
+
+/* Friend Message (Left) */
+.message:not(.own) .messageText {
+    background-color: var(--nykaa-panel) !important;
+    color: white !important;
+    border: 1px solid #333;
+    /* Neon glow for Nykaa messages */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+/* Own Message (Right) */
+.message.own .messageText {
+    background-color: var(--nykaa-accent) !important;
+    /* Pink */
+    color: white !important;
+    box-shadow: 0 0 10px rgba(254, 44, 85, 0.4);
+    /* Neon Pink Glow */
+}
+
+/* Skin Type Buttons Container */
+.skin-type-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 10px 45px;
+    /* Indent to align with message */
+    max-width: 300px;
+}
+
+.skin-type-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--nykaa-border);
+    color: var(--nykaa-accent);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.skin-type-btn:hover {
+    background-color: rgba(254, 44, 85, 0.1);
+    border-color: var(--nykaa-accent);
+    box-shadow: 0 0 8px rgba(254, 44, 85, 0.3);
+}
+
+/* Input Area */
+.chatBoxBottom {
+    background-color: var(--nykaa-panel);
+    padding: 10px 20px;
+}
+
+.chatMessageInput {
+    background-color: #2a2a2a !important;
+    border-radius: 20px !important;
+    color: white !important;
+}
