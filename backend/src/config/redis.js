@@ -5,8 +5,18 @@ const Redis = require('ioredis');
 const DEFAULT_REDIS_URL = 'redis://redis:6379';
 
 // Create Redis client with retry strategy
-const redisClient = process.env.REDIS_URL
-    ? new Redis(process.env.REDIS_URL)
+// Create Redis client with retry strategy
+const redisUrl = process.env.REDIS_URL;
+
+console.log('--- Redis Connection Debug ---');
+if (redisUrl) {
+    console.log('REDIS_URL is set:', redisUrl.substring(0, 15) + '...');
+} else {
+    console.error('REDIS_URL is NOT set. Falling back to default host: redis');
+}
+
+const redisClient = redisUrl
+    ? new Redis(redisUrl)
     : new Redis({
         host: process.env.REDIS_HOST || 'redis',
         port: process.env.REDIS_PORT || 6379,
