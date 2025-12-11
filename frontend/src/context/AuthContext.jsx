@@ -7,7 +7,9 @@ const AuthContext = createContext(null);
 
 // Create axios instance here instead of importing from api.js
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api`
+    : '/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -141,10 +143,10 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       // Simulating a redirect to Google
       console.log("Redirecting to Google Auth...");
-      
+
       // In a real app, this would be: 
       // window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?...';
-      
+
       // For this demo:
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
       alert("Redirecting to Google Sign-In... (This is a mock)");
