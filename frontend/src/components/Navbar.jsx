@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { makeRequest } from '../axios';
 import {
     AppBar,
     Toolbar,
@@ -24,11 +25,33 @@ import {
 export default function Navbar() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const [query, setQuery] = React.useState("");
+    const [searchResults, setSearchResults] = React.useState([]);
+    const [showResults, setShowResults] = React.useState(false);
 
     const handleLogout = () => {
         logout();
     };
 
+    const handleSearch = async (e) => {
+        const searchText = e.target.value;
+        setQuery(searchText);
+
+        if (searchText.length > 0) {
+            try {
+                const res = await makeRequest.get(`/users/search?search=${searchText}`);
+                setSearchResults(res.data);
+                setShowResults(true);
+            } catch (err) {
+                console.error(err);
+            }
+        } else {
+            setSearchResults([]);
+            setShowResults(false);
+        }
+    };
+
+    // ... re-implement return ...
     return (
         <AppBar position="fixed" color="inherit" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', maxWidth: '975px', width: '100%', margin: '0 auto', px: { xs: 1, md: 2 } }}>
@@ -50,10 +73,59 @@ export default function Navbar() {
                     </Typography>
                 </Link>
 
-                {/* Search Bar */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', bgcolor: 'action.hover', borderRadius: '8px', px: 2, py: 0.5, minWidth: '268px' }}>
+                {/* Search Bar - RELATIVE POSITION for Dropdown */}
+                <Box sx={{ position: 'relative', display: { xs: 'none', md: 'flex' }, alignItems: 'center', bgcolor: 'action.hover', borderRadius: '8px', px: 2, py: 0.5, minWidth: '268px' }}>
                     <Search sx={{ color: 'text.secondary', mr: 1 }} />
-                    <InputBase placeholder="Search" sx={{ flex: 1, color: 'text.primary' }} />
+                    <InputBase
+                        placeholder="Search"
+                        sx={{ flex: 1, color: 'text.primary' }}
+                        value={query}
+                        onChange={handleSearch}
+                        onBlur={() => setTimeout(() => setShowResults(false), 200)}
+                        onFocus={() => { if (query.length > 0) setShowResults(true); }}
+                    />
+
+                    {/* Search Results Dropdown */}
+                    {showResults && searchResults.length > 0 && (
+                        <Box sx={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: 0,
+                            width: '100%',
+                            bgcolor: 'background.paper',
+                            boxShadow: 3,
+                            borderRadius: '0 0 8px 8px',
+                            zIndex: 10,
+                            mt: 1,
+                            maxHeight: '300px',
+                            overflowY: 'auto'
+                        }}>
+                            {searchResults.map((user) => (
+                                <Box
+                                    key={user._id}
+                                    onClick={() => {
+                                        navigate(`/profile/${user.username}`);
+                                        setQuery("");
+                                        setShowResults(false);
+                                    }}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 2,
+                                        p: 1.5,
+                                        cursor: 'pointer',
+                                        '&:hover': { bgcolor: 'action.hover' }
+                                    }}
+                                >
+                                    <Avatar src={user.profilePicture || "/assets/person/noAvatar.png"} sx={{ width: 40, height: 40 }} />
+                                    <Box>
+                                        <Typography variant="subtitle2" fontWeight="bold">{user.username}</Typography>
+                                        <Typography variant="caption" color="text.secondary">{user.name}</Typography>
+                                    </Box>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
                 </Box>
 
                 {/* Navigation Icons */}

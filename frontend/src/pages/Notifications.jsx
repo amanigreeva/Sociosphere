@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, List, ListItem, ListItemAvatar, Avatar, ListItemText, CircularProgress, Alert, Button } from '@mui/material';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import { useAuth } from '../context/AuthContext';
 import { format } from 'timeago.js';
 import { useNavigate } from 'react-router-dom';
@@ -14,9 +14,7 @@ export default function Notifications() {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const res = await axios.get('/api/notifications', {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get('/notifications');
                 setNotifications(res.data);
             } catch (err) {
                 console.error("Error fetching notifications:", err);
@@ -29,9 +27,7 @@ export default function Notifications() {
 
     const handleFollowBack = async (senderId) => {
         try {
-            await axios.put(`/api/users/${senderId}/follow`, {}, {
-                headers: { 'x-auth-token': token }
-            });
+            await makeRequest.put(`/users/${senderId}/follow`, {});
             // Update local user state to reflect following
             const updatedFollowing = [...currentUser.following, senderId];
             updateUser({ ...currentUser, following: updatedFollowing });

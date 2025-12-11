@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Modal, Typography, Button, TextField, IconButton, Avatar, Divider } from '@mui/material';
 import { Close, Image, EmojiEmotions, LocationOn } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import { toast } from 'react-toastify';
 
 const style = {
@@ -45,14 +45,14 @@ const CreatePostModal = ({ open, onClose }) => {
             newPost.media = [fileName]; // Assuming backend handles this or we upload separately
 
             try {
-                await axios.post("http://localhost:5000/api/upload", data);
+                await makeRequest.post("/upload", data);
             } catch (err) {
                 console.log(err);
             }
         }
 
         try {
-            await axios.post("http://localhost:5000/api/posts", newPost);
+            await makeRequest.post("/posts", newPost);
             toast.success("Post created successfully!");
             setDesc('');
             setFile(null);

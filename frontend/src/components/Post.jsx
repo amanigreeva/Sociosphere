@@ -3,7 +3,7 @@ import { MoreVert, Favorite, FavoriteBorder, ChatBubbleOutline, Send, BookmarkBo
 import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton, Typography, InputBase, Menu, MenuItem } from '@mui/material';
 import { format } from 'timeago.js';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
@@ -49,7 +49,7 @@ export default function Post({ post, onUnsave }) {
                 // ID string, need to fetch
                 const fetchUser = async () => {
                     try {
-                        const res = await axios.get(`/api/users/${post.userId}`);
+                        const res = await makeRequest.get(`/users/${post.userId}`);
                         setAuthor(res.data);
                     } catch (err) {
                         console.error("Failed to fetch post author", err);
@@ -67,9 +67,7 @@ export default function Post({ post, onUnsave }) {
 
     const likeHandler = async () => {
         try {
-            await axios.put("/api/posts/" + post._id + "/like", {}, {
-                headers: { 'x-auth-token': token }
-            });
+            await makeRequest.put("/posts/" + post._id + "/like", {});
             setLike(isLiked ? like - 1 : like + 1);
             setIsLiked(!isLiked);
         } catch (err) {
@@ -80,10 +78,8 @@ export default function Post({ post, onUnsave }) {
     const handleComment = async () => {
         if (!commentText.trim()) return;
         try {
-            const res = await axios.post(`/api/posts/${post._id}/comment`, {
+            const res = await makeRequest.post(`/posts/${post._id}/comment`, {
                 text: commentText
-            }, {
-                headers: { 'x-auth-token': token }
             });
             setComments([...comments, res.data]);
             setCommentText("");
@@ -96,9 +92,7 @@ export default function Post({ post, onUnsave }) {
 
     const saveHandler = async () => {
         try {
-            await axios.put(`/api/users/${currentUser._id}/save/${post._id}`, {}, {
-                headers: { 'x-auth-token': token }
-            });
+            await makeRequest.put(`/users/${currentUser._id}/save/${post._id}`, {});
 
             const newSavedState = !isSaved;
             setIsSaved(newSavedState);

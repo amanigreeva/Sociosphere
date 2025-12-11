@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import Logo from './Logo';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import SettingsModal from './SettingsModal';
 import ReportProblemModal from './ReportProblemModal';
 import {
@@ -55,9 +55,7 @@ const Sidebar = () => {
         const fetchUnreadCount = async () => {
             if (!user?._id || !token) return;
             try {
-                const res = await axios.get(`/api/conversations/${user._id}`, {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get(`/conversations/${user._id}`);
                 const conversations = res.data;
                 let total = 0;
                 conversations.forEach(c => {
@@ -109,7 +107,7 @@ const Sidebar = () => {
     const handleAskAI = async () => {
         try {
             // 1. Find the AI User
-            const userRes = await axios.get(`/api/users?username=Classic_AI`);
+            const userRes = await makeRequest.get(`/users?username=Classic_AI`);
             const aiUser = userRes.data;
 
             if (!aiUser) {
@@ -118,11 +116,9 @@ const Sidebar = () => {
             }
 
             // 2. Create or Get Conversation with AI
-            const convRes = await axios.post('/api/conversations', {
+            const convRes = await makeRequest.post('/conversations', {
                 senderId: user._id,
                 receiverId: aiUser._id
-            }, {
-                headers: { 'x-auth-token': token }
             });
 
             const conversation = convRes.data;

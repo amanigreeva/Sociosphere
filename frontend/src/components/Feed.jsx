@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton, Typography, CircularProgress, Skeleton } from '@mui/material';
 import { FavoriteBorder, Favorite, ChatBubbleOutline, Send, BookmarkBorder, MoreHoriz } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 
 export default function Feed() {
     const [posts, setPosts] = useState([]);
@@ -18,9 +18,7 @@ export default function Feed() {
             }
 
             try {
-                const res = await axios.get('/api/posts/timeline', {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get('/posts/timeline');
                 setPosts(res.data || []);
             } catch (err) {
                 console.error('Error fetching posts:', err);

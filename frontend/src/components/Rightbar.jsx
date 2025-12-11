@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Avatar, Button, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import { useAuth } from '../context/AuthContext';
 
 const Rightbar = () => {
@@ -12,9 +12,7 @@ const Rightbar = () => {
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
             try {
-                const res = await axios.get('/api/users/suggested', {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get('/users/suggested');
                 setSuggestedUsers(res.data);
             } catch (err) {
                 console.error("Error fetching suggested users:", err);
@@ -27,9 +25,7 @@ const Rightbar = () => {
 
     const handleFollow = async (userId) => {
         try {
-            await axios.put(`/api/users/${userId}/follow`, {}, {
-                headers: { 'x-auth-token': token }
-            });
+            await makeRequest.put(`/users/${userId}/follow`, {});
             // Remove the followed user from the list
             setSuggestedUsers(prev => prev.filter(user => user._id !== userId));
         } catch (err) {

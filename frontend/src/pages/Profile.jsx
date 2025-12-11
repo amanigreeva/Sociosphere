@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { makeRequest } from '../axios';
 import {
     Box,
     Typography,
@@ -72,9 +72,7 @@ const EditProfileModal = ({ open, onClose, user, onUpdate }) => {
 
         setUploading(true);
         try {
-            const res = await axios.post('/api/upload', data, {
-                headers: { 'x-auth-token': token }
-            });
+            const res = await makeRequest.post('/upload', data);
             // Assuming the API returns an array of URLs
             setFormData(prev => ({ ...prev, profilePicture: res.data[0] }));
         } catch (err) {
@@ -241,9 +239,7 @@ const EditProfileModal = ({ open, onClose, user, onUpdate }) => {
                             variant="outlined"
                             onClick={() => {
                                 alert('Delete button clicked!');
-                                axios.delete(`/api/users/${user._id}`, {
-                                    headers: { 'x-auth-token': token }
-                                })
+                                makeRequest.delete(`/users/${user._id}`)
                                     .then(() => {
                                         localStorage.removeItem('user');
                                         localStorage.removeItem('token');
@@ -287,9 +283,7 @@ const FollowListModal = ({ open, onClose, type, users, isOwnProfile, currentUser
 
 
         try {
-            await axios.put(`/api/users/${userId}/unfollow`, {}, {
-                headers: { 'x-auth-token': token }
-            });
+            await makeRequest.put(`/users/${userId}/unfollow`, {});
             if (onRemove) onRemove(userId);
         } catch (err) {
             console.error("Error unfollowing user:", err);
@@ -435,9 +429,7 @@ export default function Profile() {
         const fetchUser = async () => {
             if (!username) return;
             try {
-                const res = await axios.get(`/api/users?username=${username}`, {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get(`/users?username=${username}`);
                 setProfileUser(res.data);
             } catch (err) {
                 console.error('Error fetching user:', err);
@@ -458,13 +450,9 @@ export default function Profile() {
     const handleFollow = async () => {
         try {
             if (followed) {
-                await axios.put(`/api/users/${profileUser._id}/unfollow`, {}, {
-                    headers: { 'x-auth-token': token }
-                });
+                await makeRequest.put(`/users/${profileUser._id}/unfollow`, {});
             } else {
-                await axios.put(`/api/users/${profileUser._id}/follow`, {}, {
-                    headers: { 'x-auth-token': token }
-                });
+                await makeRequest.put(`/users/${profileUser._id}/follow`, {});
             }
             setFollowed(!followed);
             // Optional: Refresh user data to update counts immediately
@@ -483,9 +471,7 @@ export default function Profile() {
         const fetchPosts = async () => {
             if (!username) return;
             try {
-                const res = await axios.get(`/api/posts/profile/${username}`, {
-                    headers: { 'x-auth-token': token }
-                });
+                const res = await makeRequest.get(`/posts/profile/${username}`);
                 setPosts(
                     res.data.sort((p1, p2) => {
                         return new Date(p2.createdAt) - new Date(p1.createdAt);
@@ -508,9 +494,7 @@ export default function Profile() {
                 delete payload.username;
             }
 
-            const res = await axios.put(`/api/users/${profileUser._id}`, payload, {
-                headers: { 'x-auth-token': token }
-            });
+            const res = await makeRequest.put(`/users/${profileUser._id}`, payload);
             setProfileUser(res.data);
 
             // If updating own profile, update context as well
@@ -536,9 +520,7 @@ export default function Profile() {
         setFollowModalOpen(true);
 
         try {
-            const res = await axios.get(`/api/users/friends/${profileUser._id}`, {
-                headers: { 'x-auth-token': token }
-            });
+            const res = await makeRequest.get(`/users/friends/${profileUser._id}`);
             if (type === 'followers') {
                 setFollowList(res.data.followers);
             } else {
