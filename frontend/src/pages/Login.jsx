@@ -224,7 +224,7 @@ const Login = () => {
           }}
         >
           <Typography variant="body2" sx={{ color: 'text.primary' }}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <MuiLink
               component={Link}
               to="/register"

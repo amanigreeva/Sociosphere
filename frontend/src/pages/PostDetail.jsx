@@ -140,7 +140,7 @@ const PostDetail = () => {
             const link = document.createElement('a');
             link.href = blobUrl;
             // Extract filename or default
-            const ext = mediaUrl.split('.').pop().split(/[\?#]/)[0] || 'jpg';
+            const ext = mediaUrl.split('.').pop().split(/[?#]/)[0] || 'jpg';
             link.download = `sociosphere_${post._id}.${ext}`;
             document.body.appendChild(link);
             link.click();

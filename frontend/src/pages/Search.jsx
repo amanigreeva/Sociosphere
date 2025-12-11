@@ -84,7 +84,7 @@ const Search = () => {
                     {query && (
                         <>
                             <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-                                {users.length} {users.length === 1 ? 'result' : 'results'} for "{query}"
+                                {users.length} {users.length === 1 ? 'result' : 'results'} for &quot;{query}&quot;
                             </Typography>
                             <List sx={{ bgcolor: 'background.default' }}>
                                 {users.length > 0 ? users.map(user => (

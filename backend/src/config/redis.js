@@ -5,18 +5,20 @@ const Redis = require('ioredis');
 const DEFAULT_REDIS_URL = 'redis://redis:6379';
 
 // Create Redis client with retry strategy
-const redisClient = new Redis({
-    host: process.env.REDIS_HOST || 'redis',
-    port: process.env.REDIS_PORT || 6379,
-    retryStrategy: (times) => {
-        const delay = Math.min(times * 100, 5000);
-        console.log(`Retrying to connect to Redis in ${delay}ms...`);
-        return delay;
-    },
-    maxRetriesPerRequest: 3,
-    enableReadyCheck: true,
-    showFriendlyErrorStack: process.env.NODE_ENV !== 'production'
-});
+const redisClient = process.env.REDIS_URL
+    ? new Redis(process.env.REDIS_URL)
+    : new Redis({
+        host: process.env.REDIS_HOST || 'redis',
+        port: process.env.REDIS_PORT || 6379,
+        retryStrategy: (times) => {
+            const delay = Math.min(times * 100, 5000);
+            console.log(`Retrying to connect to Redis in ${delay}ms...`);
+            return delay;
+        },
+        maxRetriesPerRequest: 3,
+        enableReadyCheck: true,
+        showFriendlyErrorStack: process.env.NODE_ENV !== 'production'
+    });
 
 // Event handlers
 redisClient.on('connect', () => {
@@ -54,7 +56,7 @@ if (process.env.NODE_ENV === 'test') {
     console.log('Using mock Redis client for testing');
     redisClient.get = async () => null;
     redisClient.set = async () => 'OK';
-    redisClient.on = () => {};
+    redisClient.on = () => { };
     redisClient.ping = async () => 'PONG';
 }
 

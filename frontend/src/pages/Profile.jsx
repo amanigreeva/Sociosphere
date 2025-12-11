@@ -716,7 +716,6 @@ export default function Profile() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: 1,
-                        gap: 1,
                         borderTop: activeTab === 'posts' ? 1 : 0,
                         borderColor: activeTab === 'posts' ? 'text.primary' : 'transparent',
                         pt: 1,
@@ -733,7 +732,6 @@ export default function Profile() {
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 1,
                         gap: 1,
                         borderTop: activeTab === 'reels' ? 1 : 0,
                         borderColor: activeTab === 'reels' ? 'text.primary' : 'transparent',

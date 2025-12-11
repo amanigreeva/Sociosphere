@@ -50,7 +50,7 @@ export default function ForgotPassword() {
                     </Typography>
 
                     <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
-                        Enter your email, phone, or username and we'll send you a link to get back into your account.
+                        Enter your email, phone, or username and we&apos;ll send you a link to get back into your account.
                     </Typography>
 
                     <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>

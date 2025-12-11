@@ -62,7 +62,7 @@ export default function Feed() {
             }}>
                 <Typography variant="h6" sx={{ mb: 1, color: 'text.primary' }}>Welcome to Soci∞rbit</Typography>
                 <Typography variant="body2">
-                    When you follow people, you'll see the photos and videos they post here.
+                    When you follow people, you&apos;ll see the photos and videos they post here.
                 </Typography>
             </Box>
         );
